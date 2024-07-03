@@ -51,22 +51,22 @@ function CampaignSetup() {
         setShowEditAd(true);
     };
 
-    const handleSaveBudget = (newBudget) => {
+    const handleSaveBudget = (newBudget: any) => {
         setBudget(newBudget);
         setShowEditBudget(false);
     };
 
-    const handleSaveTargetAudience = (newTargetAudience) => {
+    const handleSaveTargetAudience = (newTargetAudience: any) => {
         setTargetAudience(newTargetAudience);
         setShowEditTargetAudience(false);
     };
 
-    const handleSaveBid = (newBid) => {
+    const handleSaveBid = (newBid: any) => {
         setBid(newBid);
         setShowEditBid(false);
     };
 
-    const handleSaveAd = (newAd) => {
+    const handleSaveAd = (newAd: any) => {
         setAd(newAd);
         setShowEditAd(false);
     };
@@ -127,125 +127,53 @@ function CampaignSetup() {
                             {showEditTargetAudience && (
                                 <div className="bg-white p-6 rounded-lg shadow-md">
 
-                                  
+                                    <h2 className="text-xl font-bold mb-4">Choose a target audience</h2>
 
 
-                                    <div className="mb-4">
+                                    <RadioGroup
 
-                                        <label htmlFor="location" className="block font-medium mb-2">
+                                        aria-label="locations"
 
-                                            Locations
+                                        className="mb-4"
 
-                                        </label>
+                                        value={location}
 
-                                        <div className="flex space-x-4">
+                                        onChange={handleLocationChange}
 
-                                            <div className="flex items-center">
+                                    >
 
-                                                <input
+                                        <Radio value="all" className="mr-2">
 
-                                                    type="radio"
+                                            All countries and territories
 
-                                                    id="all-countries"
+                                        </Radio>
 
-                                                    name="location"
+                                        <Radio value="united-states" className="mr-2">
 
-                                                    value="all"
+                                            United States
 
-                                                    className="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500 focus:ring-2"
+                                        </Radio>
 
-                                                />
+                                        <Radio value="united-states-canada" className="mr-2">
 
-                                                <label htmlFor="all-countries" className="ml-2">
+                                            United States and Canada
 
-                                                    All countries and territories
+                                        </Radio>
 
-                                                </label>
+                                        <Radio value="custom-location" className="mr-2">
 
-                                            </div>
+                                            Let me choose...
 
-                                            <div className="flex items-center">
+                                        </Radio>
 
-                                                <input
-
-                                                    type="radio"
-
-                                                    id="united-states"
-
-                                                    name="location"
-
-                                                    value="united-states"
-
-                                                    className="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500 focus:ring-2"
-
-                                                />
-
-                                                <label htmlFor="united-states" className="ml-2">
-
-                                                    United States
-
-                                                </label>
-
-                                            </div>
-
-                                            <div className="flex items-center">
-
-                                                <input
-
-                                                    type="radio"
-
-                                                    id="united-states-canada"
-
-                                                    name="location"
-
-                                                    value="united-states-canada"
-
-                                                    className="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500 focus:ring-2"
-
-                                                />
-
-                                                <label htmlFor="united-states-canada" className="ml-2">
-
-                                                    United States and Canada
-
-                                                </label>
-
-                                            </div>
-
-                                            <div className="flex items-center">
-
-                                                <input
-
-                                                    type="radio"
-
-                                                    id="custom-location"
-
-                                                    name="location"
-
-                                                    value="custom-location"
-
-                                                    className="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500 focus:ring-2"
-
-                                                />
-
-                                                <label htmlFor="custom-location" className="ml-2">
-
-                                                    Let me choose...
-
-                                                </label>
-
-                                            </div>
-
-                                        </div>
-
-                                    </div>
+                                    </RadioGroup>
 
 
                                     {location === 'custom-location' && (
 
                                         <div className="mb-4">
 
-                                            <input
+                                            <Input
 
                                                 type="text"
 
@@ -257,9 +185,9 @@ function CampaignSetup() {
 
                                                 onChange={handleLocationChange}
 
-                                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-
                                                 placeholder="Enter a location to target or exclude."
+
+                                                className="w-full"
 
                                             />
 
@@ -274,31 +202,19 @@ function CampaignSetup() {
                                     )}
 
 
-                                    <div className="flex justify-start">
+                                    <div className="flex justify-end">
 
-                                        <button
-
-                                            className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded mr-2"
-
-                                            type="button"
-
-                                        >
+                                        <Button  className="mr-2">
 
                                             Cancel
 
-                                        </button>
+                                        </Button>
 
-                                        <button
-
-                                            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-
-                                            type="button"
-
-                                        >
+                                        <Button  color="primary">
 
                                             Save
 
-                                        </button>
+                                        </Button>
 
                                     </div>
 
