@@ -25,9 +25,9 @@ export default function Layout(props: any) {
         setIsOpen(!isOpen);
     };
     return (
-        <div className="flex h-screen" >
-            <aside className="w-1/5 bg-[#ff7f00] text-white p-4">
-                <div className="flex items-center justify-between mb-8">
+        <div className="flex h-screen">
+            <aside className="flex-none w-1/5 bg-[#ff7f00] text-white p-4 h-screen">
+                <div className="flex items-center justify-between">
                     <div className="px-4 py-2">
                         <h2 className="text-xl font-bold">mi.consulting</h2>
                         <p className="text-sm">Owner</p>
@@ -64,22 +64,22 @@ export default function Layout(props: any) {
                     <Link href="#" className="block py-2 px-4" prefetch={false}>
                         Settings
                     </Link>
-                    
-                    
+
+
                 </div>
                 <div className="flex items-center justify-center mt-4"> {/* Adjust margin top as needed */}
-                <Link href="#" className="flex items-center">
-                    <Image
-                        src={logo}
-                        alt="Logo"
-                        width={50}
-                        height={100}
-                    />
-                </Link>
-            </div>
+                    <Link href="#" className="flex items-center">
+                        <Image
+                            src={logo}
+                            alt="Logo"
+                            width={50}
+                            height={100}
+                        />
+                    </Link>
+                </div>
 
             </aside>
-            <main className="w-full">
+            <main className="w-full h-screen">
                 <header className="flex items-center justify-between border-b border-gray-300 pb-4 mt-4 p-4">
                     <div className="flex items-center space-x-4">
                         <CircleAlertIcon className="w-6 h-6 text-yellow-500" />
@@ -99,7 +99,10 @@ export default function Layout(props: any) {
                         </Avatar>
                     </div>
                 </header>
-                {props.children}
+                <div className="container mx-auto px-4 mb-8 h-screen flex flex-col flex-grow overflow-y-auto">
+                    {props.children}
+                </div>
+
             </main>
         </div>
     )

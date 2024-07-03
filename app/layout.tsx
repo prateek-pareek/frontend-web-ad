@@ -16,12 +16,12 @@ export default function RootLayout({
 }) {
   return (
 
-    <html lang="en" >
+    <html lang="en">
       <body className="static h-full bg-gray-50">
         <SessionProvider>
           <NextUIProvider>
             <NextThemesProvider attribute="class" defaultTheme='light'>
-              <main className="text-foreground bg-background">
+              <main className="text-foreground bg-background h-screen">
                 <NotificationProvider>
                     {children}
                   </NotificationProvider>
