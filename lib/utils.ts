@@ -1,3 +1,5 @@
+import { type ClassValue, clsx } from 'clsx';
+import { twMerge } from 'tailwind-merge';
 import { GetInitialSeoKeywords } from "./data";
 import { Advertisement, ad_attribute } from "./definitions";
 
@@ -66,6 +68,13 @@ export const updateVersion = (oldVersion: string): string => {
   versionArray[2] = (parseInt(versionArray[2]) + 1).toString();
   return versionArray.join('.');
 };
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}
+
+export const numberDigitFormatter = (number: number) =>
+  `$${Intl.NumberFormat('us').format(number).toString()}`;
 
 export const assembleAd = (ad: Advertisement|null, formData: FormData, validatedData: any): Advertisement => {
 
