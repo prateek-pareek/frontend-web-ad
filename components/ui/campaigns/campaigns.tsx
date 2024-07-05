@@ -7,6 +7,7 @@ import { data, pages, keyWords, campaignsData, BarData } from "../dummyData";
 import CampaignTable from '../dashboard/table'
 import { format } from 'date-fns';
 import { Slider } from "@nextui-org/react";
+import Link from "next/link";
 const Campaigns = () => {
     const [value, setValue] = useState(0);
     const [startDate, setStartDate] = useState(new Date('2023-01-01').getTime());
@@ -37,6 +38,10 @@ const Campaigns = () => {
         setFilteredData(filtered);
     };
 
+    const NavigateToCreate = () => {
+
+    }
+
     return (
         <div>
             <div>
@@ -44,11 +49,12 @@ const Campaigns = () => {
                     <div className="h-px bg-gray-300 justify-between" />
                     <div className="flex justify-between items-center mt-4 mb-4">
                         <h1 className="text-3xl font-bold">Campaigns</h1>
-                        <button
+                        <Link
                             className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                            href="/campaigns/create_campaigns"
                         >
                             Create New Campaign
-                        </button>
+                        </Link>
                     </div>
                     <div className="h-px bg-gray-200 mb-4" />
                     <p className="text-xl mb-8">Welcome, Xue!</p>

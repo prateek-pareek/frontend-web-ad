@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Head from 'next/head';
-import { RadioGroup, Radio, Input, Button } from '@nextui-org/react';
+import { RadioGroup, Radio, Input, Button, Checkbox, Textarea } from '@nextui-org/react';
 const PencilIcon = () => {
     return (
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
@@ -8,7 +8,10 @@ const PencilIcon = () => {
         </svg>
     );
 };
-
+export function GetInitialSeoKeywords() {
+    const initialSeoKeywords: string[] = ["Sample1", "Sample2"];;
+    return initialSeoKeywords;
+}
 function CampaignSetup() {
 
 
@@ -25,22 +28,79 @@ function CampaignSetup() {
     const [showEditTargetAudience, setShowEditTargetAudience] = useState(false);
     const [showEditBid, setShowEditBid] = useState(false);
     const [showEditAd, setShowEditAd] = useState(false);
+    const [showLocation, setShowLocation] = useState(false);
 
     const [location, setLocation] = useState('');
+    const [customeLocation, setCustomLocation] = useState('');
+    const [showNetwork, setShowNetwork] = useState(false);
+    const [network, setNetwork] = useState('');
+    const [searchNetwork, setSearchNetwork] = useState(false);
+    const [displayNetwork, setDisplayNetwork] = useState(false);
+    const [selectedOption, setSelectedOption] = useState(null);
 
+    const [showKeyword, setShowKeyword] = useState(false);
 
+    const [keywords, setKeywords] = useState([
+        { keyword: "content marketing", popularity: 90500 },
+    ]);
+    const [newKeyword, setNewKeyword] = useState("");
+
+    const handleShowKeyword = () => {
+        setShowKeyword(true)
+    }
+
+    const SaveShowKeyword = () => {
+        setShowKeyword(false)
+    }
+    const handleAddKeyword = () => {
+        const newKeywords = newKeyword.trim().split(",");
+        if (newKeywords.length > 0) {
+            setKeywords([
+                ...keywords,
+                ...newKeywords.map((keyword) => ({ keyword: keyword.trim(), popularity: 0 })),
+            ]);
+            setNewKeyword("");
+        }
+    };
+
+    const handleDeleteKeyword = (index:any) => {
+        setKeywords(keywords.filter((_, i) => i !== index));
+    };
+
+    const handleOptionChange = (event: any) => {
+        setSelectedOption(event.target.value);
+    };
+
+    const handleSearchNetworkChange = (e: any) => {
+        setSearchNetwork(e.target.checked);
+    };
+
+    const handleDisplayNetworkChange = (e: any) => {
+        setDisplayNetwork(e.target.checked);
+    };
+
+    const handleCustomeLocationChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setCustomLocation(event.target.value);
+    };
     const handleLocationChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-
         setLocation(event.target.value);
-
     };
 
     const handleEditBudget = () => {
         setShowEditBudget(true);
     };
+    const handleEditNetwork = () => {
+        setShowNetwork(true);
+    };
+    const handleSaveNetwork = () => {
+        setShowNetwork(false);
+    };
 
     const handleEditTargetAudience = () => {
         setShowEditTargetAudience(true);
+    };
+    const handleShowLocation = () => {
+        setShowLocation(true);
     };
 
     const handleEditBid = () => {
@@ -55,19 +115,24 @@ function CampaignSetup() {
         setBudget(newBudget);
         setShowEditBudget(false);
     };
-
-    const handleSaveTargetAudience = (newTargetAudience: any) => {
-        setTargetAudience(newTargetAudience);
-        setShowEditTargetAudience(false);
+    const handleSaveLocation = (location: any) => {
+        setLocation(location);
+        setShowLocation(false);
     };
 
+
     const handleSaveBid = (newBid: any) => {
-        setBid(newBid);
+        if (newBid) {
+            setBid(newBid);
+        }
         setShowEditBid(false);
     };
 
     const handleSaveAd = (newAd: any) => {
-        setAd(newAd);
+        if (newAd) {
+            setAd(newAd);
+        }
+
         setShowEditAd(false);
     };
 
@@ -91,17 +156,17 @@ function CampaignSetup() {
                                 Your Budget
                             </label>
                             <div className="w-2/3">{budget}</div>
-                            <button className="text-gray-700 text-xs font-bold" onClick={handleEditBudget}>
+                            <Button className="text-gray-700 text-xs font-bold" onClick={handleEditBudget}>
                                 <PencilIcon />
-                            </button>
+                            </Button>
                         </div>)}
                     {showEditBudget && (
                         <div className="bg-gray-200 p-4 rounded mt-2 justify-between">
                             <label className="w-1/3 text-gray-700 text-xs font-bold mb-2">
                                 Your Budget
                             </label>
-                            <input type="text" value={budget} onChange={(e) => setBudget(e.target.value)} />
-                            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" onClick={() => handleSaveBudget(budget)}>
+                            <Input type="text" value={budget} onChange={(e) => setBudget(e.target.value)} className='ml-2' />
+                            <button className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline items-start mt-4" onClick={() => handleSaveBudget(budget)}>
                                 Save
                             </button>
                         </div>
@@ -119,51 +184,32 @@ function CampaignSetup() {
                                 <label className="w-1/3 text-gray-700 text-xs font-bold mb-2">
                                     Locations
                                 </label>
-                                <div className="w-2/3">{targetAudience.locations}</div>
-                                <button className="text-gray-700 text-xs font-bold" onClick={handleEditTargetAudience}>
+                                <div className="w-2/3">{location === 'custom-location' ? customeLocation : location}</div>
+                                <Button className="text-gray-700 text-xs font-bold" onClick={handleShowLocation}>
                                     <PencilIcon />
-                                </button>
+                                </Button>
                             </div>
-                            {showEditTargetAudience && (
+                            {showLocation && (
                                 <div className="bg-white p-6 rounded-lg shadow-md">
 
-                                    <h2 className="text-xl font-bold mb-4">Choose a target audience</h2>
-
-
                                     <RadioGroup
-
                                         aria-label="locations"
-
                                         className="mb-4"
-
                                         value={location}
-
-                                        onChange={handleLocationChange}
-
+                                        onChange={(e) => { handleLocationChange(e) }}
                                     >
-
                                         <Radio value="all" className="mr-2">
-
                                             All countries and territories
-
                                         </Radio>
-
                                         <Radio value="united-states" className="mr-2">
-
                                             United States
-
                                         </Radio>
-
                                         <Radio value="united-states-canada" className="mr-2">
-
                                             United States and Canada
-
                                         </Radio>
 
                                         <Radio value="custom-location" className="mr-2">
-
                                             Let me choose...
-
                                         </Radio>
 
                                     </RadioGroup>
@@ -177,13 +223,13 @@ function CampaignSetup() {
 
                                                 type="text"
 
-                                                id="location"
+                                                id="customlocation"
 
-                                                name="location"
+                                                name="customelocation"
 
-                                                value={location}
+                                                value={customeLocation}
 
-                                                onChange={handleLocationChange}
+                                                onChange={handleCustomeLocationChange}
 
                                                 placeholder="Enter a location to target or exclude."
 
@@ -202,20 +248,10 @@ function CampaignSetup() {
                                     )}
 
 
-                                    <div className="flex justify-end">
-
-                                        <Button  className="mr-2">
-
-                                            Cancel
-
-                                        </Button>
-
-                                        <Button  color="primary">
-
+                                    <div className="flex justify-start">
+                                        <Button className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline items-start mt-4" onClick={() => handleSaveLocation(location)}>
                                             Save
-
                                         </Button>
-
                                     </div>
 
                                 </div>
@@ -226,44 +262,220 @@ function CampaignSetup() {
                                 <label className="w-1/3 text-gray-700 text-xs font-bold mb-2">
                                     Networks
                                 </label>
-                                <div className="w-2/3">{targetAudience.networks}</div>
-                                <button className="text-gray-700 text-xs font-bold" onClick={handleEditTargetAudience}>
+                                <div className="w-2/3">{searchNetwork ? "Search-Network" : null} {displayNetwork ? "Display-Network" : null}</div>
+                                <Button className="text-gray-700 text-xs font-bold" onClick={handleEditNetwork}>
                                     <PencilIcon />
-                                </button>
+                                </Button>
                             </div>
+
+                            {showNetwork ? <div className="container mx-auto p-4 pt-6">
+                                <div className="bg-white rounded-lg shadow-md p-4">
+                                    <h4 className="text-lg font-bold mb-2">Networks</h4>
+                                    <p className="text-gray-500 mb-4">
+                                        Sites that show your ads along with their own search results, new articles or other content.
+                                    </p>
+                                    <div className="flex flex-wrap -mx-4">
+                                        <div className="w-full md:w-1/2 xl:w-1/2 p-4">
+                                            <div className="flex items-center mb-4">
+                                                <Checkbox
+                                                    id="search-network"
+                                                    checked={searchNetwork}
+                                                    onChange={handleSearchNetworkChange}
+                                                    className="mr-2"
+                                                />
+                                                <label htmlFor="search-network" className="text-lg font-bold">
+                                                    Search Network
+                                                </label>
+                                            </div>
+                                            <p className="text-gray-500 mb-4">
+                                                Includes Google search sites and non-Google sites that use Google as a search engine.
+                                            </p>
+                                        </div>
+                                        <div className="w-full md:w-1/2 xl:w-1/2 p-4">
+                                            <div className="flex items-center mb-4">
+                                                <Checkbox
+                                                    id="display-network"
+                                                    checked={displayNetwork}
+                                                    onChange={handleDisplayNetworkChange}
+                                                    className="mr-2"
+                                                />
+                                                <label htmlFor="display-network" className="text-lg font-bold">
+                                                    Display Network
+                                                </label>
+                                            </div>
+                                            <p className="text-gray-500 mb-4">
+                                                Includes Google content sites and non-Google content partners that show ads.
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div className="flex justify-start mt-4">
+                                        <Button className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 mr-2 rounded" onClick={handleSaveNetwork}>
+                                            Save
+                                        </Button>
+                                        <Button className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
+                                            Cancel
+                                        </Button>
+                                    </div>
+                                </div>
+                            </div> : null}
+
                         </div>
 
                         <div className="w-full  px-3 mb-6 md:mb-0 mt-4">
-                            <div className="w-full flex bg-gray-200 p-4 rounded items-center">
-                                <label className="w-1/3 text-gray-700 text-xs font-bold mb-2">
+                            <div className="w-full flex bg-gray-200 p-4 rounded justify-between">
+                                <label className="text-gray-700 text-xs font-bold ">
                                     KeyWords
                                 </label>
-                                <div className="w-2/3">{targetAudience.keywords}</div>
-                                <button className="text-gray-700 text-xs font-bold" onClick={handleEditTargetAudience}>
+                                <div className="flex flex-wrap">
+                                    {keywords.map((keyword, index) => (
+                                        <div key={index} className="mr-2 mb-2">
+                                            <span className="px-4 py-2">{keyword.keyword}</span>
+                                        </div>
+                                    ))}
+                                </div>
+                                <Button className="text-gray-700 text-xs font-bold flex-end" onClick={handleShowKeyword}>
                                     <PencilIcon />
-                                </button>
+                                </Button>
                             </div>
+                            {showKeyword ? 
+                            <div className="bg-white p-4 rounded-lg shadow-md">
+                                <h2 className="text-lg font-bold mb-2">Keywords</h2>
+                                <p className="text-gray-600 mb-4">
+                                    Add around 15-20 keywords. These are the search terms that may trigger
+                                    your ad to appear next to search results.
+                                </p>
+
+                              
+
+                                <table className="w-full border-collapse">
+                                    <thead>
+                                        <tr>
+                                            <th className="px-4 py-2 text-left font-medium text-gray-700">
+                                                Keyword
+                                            </th>
+                                            <th className="px-4 py-2 text-left font-medium text-gray-700">
+                                                Search Popularity
+                                            </th>
+                                            <th className="px-4 py-2 text-left font-medium text-gray-700">
+                                                Actions
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {keywords.map((keyword, index) => (
+                                            <tr key={index}>
+                                                <td className="px-4 py-2">{keyword.keyword}</td>
+                                                <td className="px-4 py-2">{keyword.popularity}</td>
+                                                <td className="px-4 py-2">
+                                                    <button
+                                                        className="px-2 py-1 bg-red-500 text-white font-medium rounded-md hover:bg-red-600 focus:outline-none focus:ring-red-500 focus:ring-1"
+                                                        onClick={() => handleDeleteKeyword(index)}
+                                                    >
+                                                        Delete
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                                <div className="flex justify-between items-center mb-4">
+                                    <div className="flex-grow">
+                                        <input
+                                            type="text"
+                                            className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-blue-500 focus:ring-1"
+                                            placeholder="Enter keywords separated by commas"
+                                            value={newKeyword}
+                                            onChange={(e) => setNewKeyword(e.target.value)}
+                                        />
+                                    </div>
+                                    <Button
+                                        className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 mr-2 rounded ml-2"
+                                        onClick={handleAddKeyword}
+                                    >
+                                        Add
+                                    </Button>
+                                </div>
+
+                                <div className="mt-4 flex justify-start">
+                                    <Button
+                                        className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 mr-2 rounded"
+                                        onClick={SaveShowKeyword}
+                                    >
+                                        Save
+                                    </Button>
+                                    <Button
+                                        onClick={SaveShowKeyword}
+                                        className="ml-2 px-4 py-2 bg-gray-300 text-gray-700 font-medium rounded-md hover:bg-gray-400 focus:outline-none focus:ring-gray-300 focus:ring-1"
+                                    >
+                                        Cancel
+                                    </Button>
+                                </div>
+                            </div>
+                                : null}
                         </div>
                     </div>
                 </div>
             </div>
             <div className="flex flex-wrap -mx-3 mb-6">
-                <div className="w-full  px-3 mb-6 md:mb-0">
+                <div className="w-full  px-3 mb-6">
                     <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
                         3. Set your bid
                     </label>
-                    <div className="bg-gray-200 p-4 rounded flex items-center">
-                        <div className="w-2/3">{bid}</div>
-                        <button className="text-gray-700 text-xs font-bold" onClick={handleEditBid}>
+                    <div className="bg-gray-200 p-4 rounded flex justify-between">
+                        <div className="w-2/3">{selectedOption === 'automatic' ? "AdWords automatically sets your bids to help you get as many clicks as possible within your budget." : null}
+                            {selectedOption === 'manual' ? "I'll set my bids manually" : null}
+                        </div>
+                        <Button className="text-gray-700 text-xs font-bold" onClick={() => handleEditBid()}>
                             <PencilIcon />
-                        </button>
+                        </Button>
                     </div>
                     {showEditBid && (
-                        <div className="bg-gray-200 p-4 rounded mt-2">
-                            <input type="text" value={bid} onChange={(e) => setBid(e.target.value)} />
-                            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" onClick={() => handleSaveBid(bid)}>
-                                Save
-                            </button>
+                        <div className="p-4 bg-white rounded-md shadow-md">
+                            <div className="mb-4">
+                                <p className="text-gray-700">
+                                    The most you're willing to pay for a click on your ad.
+                                </p>
+                            </div>
+                            <div className="flex items-center mb-4">
+                                <input
+                                    type="radio"
+                                    name="bid-option"
+                                    value="automatic"
+                                    checked={selectedOption === 'automatic'}
+                                    onChange={handleOptionChange}
+                                    className="mr-2"
+                                />
+                                <label htmlFor="automatic" className="text-gray-700">
+                                    AdWords automatically sets your bids to help you get as many clicks as
+                                    possible within your budget.
+                                </label>
+                            </div>
+                            <div className="mb-4">
+                                <p className="text-gray-700">
+                                    We recommend having AdWords automatically set your bids to start out.
+                                </p>
+                            </div>
+                            <div className="flex items-center">
+                                <input
+                                    type="radio"
+                                    name="bid-option"
+                                    value="manual"
+                                    checked={selectedOption === 'manual'}
+                                    onChange={handleOptionChange}
+                                    className="mr-2"
+                                />
+                                <label htmlFor="manual" className="text-gray-700">
+                                    I'll set my bids manually
+                                </label>
+                            </div>
+                            <div className="mt-6 flex justify-start">
+                                <Button className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded" onClick={() => { handleSaveBid(selectedOption) }}>
+                                    Save
+                                </Button>
+                                <button className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded ml-4" onClick={() => { handleSaveBid(selectedOption) }}>
+                                    Cancel
+                                </button>
+                            </div>
                         </div>
                     )}
                 </div>
@@ -273,27 +485,34 @@ function CampaignSetup() {
                     <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
                         4. Write your ad
                     </label>
-                    <div className="bg-gray-200 p-4 rounded flex items-center">
+                    <div className="bg-gray-200 p-4 rounded flex items-center justify-between">
                         <div className="w-2/3">{ad}</div>
-                        <button className="text-gray-700 text-xs font-bold" onClick={handleEditAd}>
+                        <Button className="text-gray-700 text-xs font-bold" onClick={handleEditAd}>
                             <PencilIcon />
-                        </button>
+                        </Button>
                     </div>
                     {showEditAd && (
                         <div className="bg-gray-200 p-4 rounded mt-2">
-                            <textarea value={ad} onChange={(e) => setAd(e.target.value)} />
-                            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" onClick={() => handleSaveAd(ad)}>
+                            <Textarea
+                                label="Ad"
+                                placeholder="Enter your description"
+                                className="max-w-xs"
+                                value={ad}
+                                onChange={(e) => setAd(e.target.value)}
+                            />
+
+                            <Button className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline items-start mt-4" onClick={() => handleSaveAd(ad)}>
                                 Save
-                            </button>
+                            </Button>
                         </div>
                     )}
                 </div>
             </div>
             <div className="flex flex-wrap -mx-3 mb-6">
                 <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
-                        Save and continue
-                    </button>
+                    <Button className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline items-start mt-4" >
+                        Save
+                    </Button>
                 </div>
             </div>
         </div>
@@ -301,3 +520,4 @@ function CampaignSetup() {
 }
 
 export default CampaignSetup;
+

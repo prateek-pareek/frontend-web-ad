@@ -79,7 +79,7 @@ export default function Layout(props: any) {
                 </div>
 
             </aside>
-            <main className="w-full h-screen">
+            <main className="w-full h-screen flex flex-col">
                 <header className="flex items-center justify-between border-b border-gray-300 pb-4 mt-4 p-4">
                     <div className="flex items-center space-x-4">
                         <CircleAlertIcon className="w-6 h-6 text-yellow-500" />
@@ -102,7 +102,6 @@ export default function Layout(props: any) {
                 <div className="container mx-auto px-4 mb-8 h-screen flex flex-col flex-grow overflow-y-auto">
                     {props.children}
                 </div>
-
             </main>
         </div>
     )
@@ -183,8 +182,8 @@ const navLinks: NavLinkData[] = [
     },
     {
         href: '#', icon: FileIcon, label: 'Campagins', submenu: [
-            { href: '#', label: 'Campaigns' },
-            { href: '#', label: 'Ad Gap' },
+            { href: '/campaigns', label: 'Campaigns' },
+            { href: '/manage ', label: 'Ad Group' },
             { href: '#', label: 'Ads' }
         ],
     },
