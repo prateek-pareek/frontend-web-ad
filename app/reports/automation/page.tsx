@@ -4,13 +4,11 @@ import React from "react";
 import Layout from "@/components/ui/layout/index";
 
 const Page: React.FC<any> = () => {
-    return (
-          <Layout>
-            <ScheduleAutomationPage/>
-          </Layout>
-    );
-  };
-  
-  
-   
+  return (
+    <Layout>
+      <ScheduleAutomationPage />
+    </Layout>
+  );
+};
+
   export default Page
