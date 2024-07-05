@@ -143,7 +143,7 @@ function CampaignSetup() {
             </Head>
             <h1 className="text-3xl font-bold mb-4">Your First Campaign</h1>
             <p className="text-gray-600 mb-6">
-                A campaign focuses on a theme or a group of products. To create a campaign, you'll set a budget, choose your audience, and write your ad. Keep in mind, you won't be charged for selecting options, and you can always make changes later.
+                A campaign focuses on a theme or a group of products. To create a campaign, you will set a budget, choose your audience, and write your ad. Keep in mind, you would not be charged for selecting options, and you can always make changes later.
             </p>
             <div className="flex flex-wrap -mx-3 mb-6">
                 <div className="w-full  px-3 mb-6 md:mb-0">
@@ -433,7 +433,7 @@ function CampaignSetup() {
                         <div className="p-4 bg-white rounded-md shadow-md">
                             <div className="mb-4">
                                 <p className="text-gray-700">
-                                    The most you're willing to pay for a click on your ad.
+                                    The most you are willing to pay for a click on your ad.
                                 </p>
                             </div>
                             <div className="flex items-center mb-4">
@@ -465,7 +465,7 @@ function CampaignSetup() {
                                     className="mr-2"
                                 />
                                 <label htmlFor="manual" className="text-gray-700">
-                                    I'll set my bids manually
+                                    I will set my bids manually
                                 </label>
                             </div>
                             <div className="mt-6 flex justify-start">
