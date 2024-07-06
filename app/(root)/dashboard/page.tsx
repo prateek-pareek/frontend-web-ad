@@ -6,9 +6,7 @@ import Dashboard from "@/components/ui/dashboard/dashboard";
 
 export default function Page() {
   return (
-        <Layout>
-          <Dashboard />
-        </Layout>
+    <Dashboard />
   );
 };
 
