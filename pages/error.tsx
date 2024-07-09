@@ -1,4 +1,4 @@
-import type { ErrorPageParam, Theme } from "@/lib/types"
+import type { ErrorPageParam, Theme } from "../lib/types"
 import { Image } from "@nextui-org/image";
 import type { GetServerSidePropsContext } from "next"
 
