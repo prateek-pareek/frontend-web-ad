@@ -52,7 +52,6 @@ export default function Form({ channels }: { channels: any[] }) {
     if (uploadedFile) {
       formDataObj.append('uploadedFileId', uploadedFile.id);
     }
-    console.log('Form data:', Array.from(formDataObj.entries()));
     try {
         const validatedData = schema.parse({
             ...formData,
