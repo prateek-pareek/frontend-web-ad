@@ -32,11 +32,11 @@ const content = [
 ];
 
 export default function Sidebar() {
+  const pathname = usePathname() || "";
   const [selected, setSelected] = useState<string>(
-    usePathname()
-      .replace('/settings/', '')
+
+    pathname?.replace('/settings/', '')
       .replaceAll('-', ' ')
-      // capitalize first letter and the letter after space
       .replace(/(^\w|\s\w)/g, (letter) => letter.toUpperCase())
   );
   return (
