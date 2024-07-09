@@ -7,7 +7,6 @@ devconfig = require('./dev.next.config.js')
 
 
 const nextConfig = {
-  basePath: '/ad',
   crossOrigin: 'use-credentials',
   images: {
     remotePatterns: [

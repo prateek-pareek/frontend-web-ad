@@ -14,6 +14,7 @@ import { useRouter } from 'next/navigation';
 import { generate_content_result } from "@/lib/definitions";
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure} from "@nextui-org/react";
 import {Spinner} from "@nextui-org/react";
+import { PressEvent } from "@react-types/shared";
 
 const schema = z.object({
       name: z.string().min(1, { message: 'Name is required' }),
@@ -79,11 +80,11 @@ export default function Form({ channels }: { channels: any[] }) {
 
 const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
   const { name, value } = event.target;
-  setFormData((prevData) => ({
+  setFormData((prevData: any) => ({
       ...prevData,
       [name]: value,
   }));
-  setErrors((prevErrors) => ({
+  setErrors((prevErrors: any) => ({
       ...prevErrors,
       [name]: '',
   }));
@@ -96,11 +97,11 @@ const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElem
   }
 };
 const handleDateChange = (name: string, date: CalendarDate | null) => {
-  setFormData((prevData) => ({
+  setFormData((prevData: any) => ({
       ...prevData,
       [name]: date ? date.toString() : '',
   }));
-  setErrors((prevErrors) => ({
+  setErrors((prevErrors: any) => ({
       ...prevErrors,
       [name]: '',
   }));
@@ -178,11 +179,11 @@ const handleDateChange = (name: string, date: CalendarDate | null) => {
   const [uploadedFile, setUploadedFile] = useState<any | null>(null);
   const handleUploadComplete = (file: any) => {
     setUploadedFile(file);
-      setFormData((prevData) => ({
+      setFormData((prevData: any) => ({
         ...prevData,
         ["image"]: file.id,
     }));
-    setErrors((prevErrors) => ({
+    setErrors((prevErrors: any) => ({
         ...prevErrors,
         ["image"]: '',
     }));
@@ -224,7 +225,7 @@ const handleDateChange = (name: string, date: CalendarDate | null) => {
   const {isOpen, onOpen,onClose, onOpenChange} = useDisclosure();
   const AcceptContentHandler = async () => {
     generatedHeadline.map((item:generate_content_result) => {
-      setFormData((prevData) => ({
+      setFormData((prevData: any) => ({
         ...prevData,
         ["headline"+item.index]: item.data,
       }));
@@ -568,7 +569,7 @@ const handleDateChange = (name: string, date: CalendarDate | null) => {
                     }
                     <Modal size="4xl" isOpen={isOpen} onOpenChange={onOpenChange} placement='top' classNames={{base:"bg-white"}}>
                       <ModalContent>
-                        {(onClose) => (
+                        {(onClose: ((e: PressEvent) => void) | undefined) => (
                           <>
                             <ModalHeader className="flex flex-col gap-1">Do you accept the following generated headlines?</ModalHeader>
                             <ModalBody>
@@ -691,7 +692,7 @@ const handleDateChange = (name: string, date: CalendarDate | null) => {
                       className="appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500" 
                       type="text" 
                       value={valueSeoInput}
-                      onChange={event => handleInputChange(event)}
+                      onChange={(event: any) => handleInputChange(event)}
                       />
                     </div>
                     <div className='md:w-1/4'>

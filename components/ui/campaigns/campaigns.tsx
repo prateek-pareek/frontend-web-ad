@@ -51,7 +51,7 @@ const Campaigns = () => {
                         <h1 className="text-3xl font-bold">Campaigns</h1>
                         <Link
                             className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                            href="/campaigns/create_campaigns"
+                            href="/campaigns/create"
                         >
                             Create New Campaign
                         </Link>
